@@ -1,0 +1,6 @@
+ax_site_information.json:
+  path: '/page_json/{site_api_key}/{node}'
+  defaults:
+    _controller: '\Drupal\ax_site_information\Controller\AxSiteInformationController::getJson'
+  requirements:
+    _permission: 'access content'

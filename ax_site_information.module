@@ -9,28 +9,28 @@
  * Implements hook_form_FORM_ID_alter().
  */
 function ax_site_information_form_system_site_information_settings_alter(&$form, &$form_state, $form_id) {
-   
-        $config_factory = \Drupal::configFactory();
-    $site_config = $config_factory->getEditable('system.site');
-        $form['site_information']['siteapikey'] = [
-            '#type' => 'textfield',
-            '#title' => t('Site API Key'),
-            '#default_value' =>  $site_config->get('siteapikey') ?  $site_config->get('siteapikey') : t('No API Key yet'),
-            '#description' => t('API Key to access basic pages in JSON format.'),
-          ];
-       // Handle form submission
-    $form['#submit'][] = 'ax_site_information_save_api_key';
-        $form['actions']['submit']['#value'] = t('Update Configuration');
+
+  $config_factory = \Drupal::configFactory();
+  $site_config = $config_factory->getEditable('system.site');
+  $form['site_information']['siteapikey'] = [
+    '#type' => 'textfield',
+    '#title' => t('Site API Key'),
+    '#default_value' => $site_config->get('siteapikey') ? $site_config->get('siteapikey') : t('No API Key yet'),
+    '#description' => t('API Key to access basic pages in JSON format.'),
+  ];
+  // Handle form submission.
+  $form['#submit'][] = 'ax_site_information_save_api_key';
+  $form['actions']['submit']['#value'] = t('Update Configuration');
 }
 
 /**
  * Custom submit callback to save api key.
  */
 function ax_site_information_save_api_key($form, &$form_state) {
-    $config_factory = \Drupal::configFactory();
-    $site_config = $config_factory->getEditable('system.site');
-    $siteapikey_value = $form_state->getValue('siteapikey');
-    $site_config->set('siteapikey', $siteapikey_value);
-    $site_config->save();
-    \Drupal::messenger()->addMessage('Site API Key has been saved with value: '. $siteapikey_value);
+  $config_factory = \Drupal::configFactory();
+  $site_config = $config_factory->getEditable('system.site');
+  $siteapikey_value = $form_state->getValue('siteapikey');
+  $site_config->set('siteapikey', $siteapikey_value);
+  $site_config->save();
+  \Drupal::messenger()->addMessage('Site API Key has been saved with value: ' . $siteapikey_value);
 }
